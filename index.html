@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>La No-noda de Les Bubis</title>
+  <meta name="description" content="Galeria privada de fotos de Les Bubis.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --color-fondo: #f7f3ec;
+      --color-principal: #d4a373;
+      --color-secundario: #264653;
+      --color-acento: #84a59d;
+      --color-texto: #3f3f3f;
+      --color-blanco: #ffffff;
+      --color-borde: #e0d4c4;
+      --color-error: #a94442;
+      --color-error-fondo: #fff2f1;
+      --shadow-suave: 0 10px 25px rgba(0, 0, 0, 0.06);
+      --shadow-hover: 0 14px 30px rgba(0, 0, 0, 0.12);
+      --radius-grande: 18px;
+      --radius-medio: 12px;
+      --max-width: 1100px;
+      --transition-base: 0.25s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    button, input { font: inherit; }
+
+    h1, h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      color: var(--color-secundario);
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .contenedor { width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 1.25rem; }
+
+    header {
+      background: rgba(247, 243, 236, 0.96);
+      border-bottom: 1px solid rgba(224, 212, 196, 0.75);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      backdrop-filter: blur(10px);
+    }
+
+    .barra-superior { display: flex; justify-content: center; align-items: center; padding: 0.75rem 1rem; }
+    .logo img { width: auto; height: 135px; object-fit: contain; }
+
+    main { padding: 3rem 0; }
+
+    .acceso-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .acceso-texto { padding: 1rem 0; }
+
+    .subtitulo {
+      margin-bottom: 0.85rem;
+      color: var(--color-principal);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 { margin-bottom: 1rem; font-size: clamp(2.25rem, 5vw, 3.45rem); }
+    .introduccion { max-width: 620px; margin-bottom: 1.5rem; font-size: 1.05rem; }
+
+    .detalle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1.75rem;
+      color: var(--color-secundario);
+      font-weight: 700;
+    }
+
+    .detalle::before {
+      width: 9px; height: 9px; content: "";
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-principal), var(--color-acento));
+    }
+
+    .tarjeta-acceso {
+      max-width: 500px;
+      padding: 1.75rem;
+      background: var(--color-blanco);
+      border: 1px solid rgba(224, 212, 196, 0.7);
+      border-radius: var(--radius-grande);
+      box-shadow: var(--shadow-suave);
+    }
+
+    .tarjeta-acceso h2 { margin-bottom: 0.45rem; font-size: 1.55rem; }
+    .tarjeta-acceso > p { margin-bottom: 1.25rem; color: #666; }
+
+    .formulario-acceso { display: flex; flex-direction: column; gap: 1rem; }
+    .campo { display: flex; flex-direction: column; gap: 0.45rem; }
+    .campo label { color: var(--color-secundario); font-size: 0.95rem; font-weight: 700; }
+    .campo-contrasena { position: relative; }
+
+    .campo-contrasena input {
+      width: 100%;
+      min-height: 52px;
+      padding: 0.85rem 3.4rem 0.85rem 1rem;
+      color: var(--color-texto);
+      background: var(--color-blanco);
+      border: 2px solid var(--color-borde);
+      border-radius: var(--radius-medio);
+      transition: border-color var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .campo-contrasena input:focus {
+      outline: none;
+      border-color: var(--color-acento);
+      box-shadow: 0 0 0 3px rgba(132, 165, 157, 0.2);
+    }
+
+    .mostrar-clave {
+      position: absolute;
+      top: 50%;
+      right: 0.7rem;
+      transform: translateY(-50%);
+      padding: 0.35rem 0.45rem;
+      color: var(--color-acento);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .btn-principal {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      padding: 0.85rem 1.8rem;
+      color: var(--color-blanco);
+      background: linear-gradient(135deg, var(--color-principal), var(--color-acento));
+      border: none;
+      border-radius: 999px;
+      box-shadow: var(--shadow-suave);
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-weight: 700;
+      transition: transform var(--transition-base), box-shadow var(--transition-base), opacity var(--transition-base);
+    }
+
+    .btn-principal:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+    .btn-principal:disabled { cursor: wait; opacity: 0.7; }
+
+    .mensaje { display: none; padding: 0.85rem 1rem; border-radius: var(--radius-medio); font-size: 0.9rem; }
+    .mensaje.visible { display: block; }
+    .mensaje.error { color: var(--color-error); background: var(--color-error-fondo); border: 1px solid rgba(169, 68, 66, 0.25); }
+    .mensaje.info { color: var(--color-secundario); background: rgba(132, 165, 157, 0.1); border: 1px solid rgba(132, 165, 157, 0.35); }
+
+    .nota-privacidad { margin-top: 1rem; color: #777; font-size: 0.82rem; text-align: center; }
+
+    .acceso-imagen { position: relative; }
+
+    .imagen-principal {
+      min-height: 500px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8dcc8 0%, #d4c4b0 100%);
+      border-radius: var(--radius-grande);
+      box-shadow: var(--shadow-suave);
+    }
+
+    .imagen-principal img { width: 100%; height: 100%; min-height: 500px; object-fit: cover; }
+
+    .imagen-etiqueta {
+      position: absolute;
+      right: 5%;
+      bottom: -18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.75rem 1.2rem;
+      color: var(--color-secundario);
+      background: var(--color-blanco);
+      border-radius: 999px;
+      box-shadow: var(--shadow-suave);
+      font-size: 0.87rem;
+      font-weight: 700;
+    }
+
+    .imagen-etiqueta span:first-child {
+      display: grid;
+      width: 27px; height: 27px;
+      place-items: center;
+      color: var(--color-blanco);
+      background: linear-gradient(135deg, var(--color-principal), var(--color-acento));
+      border-radius: 50%;
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding: 2.5rem 0 2rem;
+      color: #777;
+      text-align: center;
+      border-top: 1px solid var(--color-borde);
+    }
+
+    footer p + p { margin-top: 0.35rem; }
+    footer strong { color: var(--color-secundario); font-size: 1.05rem; }
+
+    @media (max-width: 900px) {
+      main { padding-top: 2rem; }
+      .acceso-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .acceso-imagen { order: -1; }
+      .imagen-principal, .imagen-principal img { min-height: 380px; }
+      .tarjeta-acceso { max-width: none; }
+    }
+
+    @media (max-width: 768px) {
+      .logo img { height: 88px; }
+      main { padding: 1.75rem 0; }
+      .imagen-principal, .imagen-principal img { min-height: 310px; }
+      .imagen-etiqueta { position: static; width: max-content; max-width: 100%; margin: 1rem auto 0; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.1rem; }
+      .tarjeta-acceso { padding: 1.35rem 1.1rem; }
+      .imagen-principal, .imagen-principal img { min-height: 250px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="barra-superior">
+      <div class="logo">
+        <img src="img/logo_ola_bubis.png" alt="Logo de Les Bubis">
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="contenedor">
+      <section class="acceso-grid" aria-labelledby="titulo-principal">
+        <div class="acceso-texto">
+          <p class="subtitulo">Nuestro gran día</p>
+          <h1 id="titulo-principal">Fotos de la No-Boda</h1>
+
+          <p class="introduccion">
+            Gracias por acompañarnos y formar parte de un día tan especial.
+            Hemos reunido aquí las fotos para que podáis volver a disfrutar de todos esos momentos.
+            ¿Ponemos nueva fecha y repetimos?
+          </p>
+
+          
+          <div class="tarjeta-acceso">
+            <h2>Accede a la galeria</h2>
+            <p>Introduce la contraseña que te hemos facilitado para ver y descargar las fotos.</p>
+
+            <form id="formulario-acceso" class="formulario-acceso" autocomplete="off">
+              <div class="campo">
+                <label for="contrasena">Contraseña</label>
+                <div class="campo-contrasena">
+                  <input
+                    id="contrasena"
+                    name="contrasena"
+                    type="password"
+                    required
+                    minlength="4"
+                    maxlength="100"
+                    autocomplete="current-password"
+                    placeholder="Escribe la contraseña"
+                    aria-describedby="mensaje-acceso"
+                  >
+                  <button id="mostrar-clave" class="mostrar-clave" type="button" aria-label="Mostrar contraseña">
+                    Mostrar
+                  </button>
+                </div>
+              </div>
+
+              <button id="boton-entrar" class="btn-principal" type="submit">
+                Entrar a la galeria
+              </button>
+
+              <div id="mensaje-acceso" class="mensaje" role="status" aria-live="polite"></div>
+            </form>
+
+            <p class="nota-privacidad">No compartas el enlace ni la contraseña fuera del grupo. ¡Gracias!</p>
+          </div>
+        </div>
+
+        <div class="acceso-imagen">
+          <div class="imagen-principal">
+            <img src="img/les_bubis_coche.jpeg" alt="Isa y Carmen el dia de Les Bubis">
+          </div>
+          <div class="imagen-etiqueta">            
+            
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="contenedor">
+      <p>Agradecimiento especial a Patri ♡ </p>
+      <p><strong>Con cariño, Isa &amp; Carmen</strong></p>
+    </div>
+  </footer>
+
+  <script>
+  	const CONFIGURACION_CIFRADA = {
+  	sal: "9QG60aVMYvjZef8KrBd99A==",
+  	iv: "WD9nfwNmQ76Oa0Iu",
+  	cifrado: "D5Phcm3Ij+g1lc6DaktsuU2swJwAdMeTFPtE8P+Qb+Z+qOotk02fwPzWahGRptnRjhRFhKQ2lefZc2A3iX7ERyA3wIMwtJgqFZtz8/EOejQ4qARJDRp+BakpxlCcpu6/vWjz0Q=="
+	};
+
+    const formulario = document.getElementById("formulario-acceso");
+    const campoContrasena = document.getElementById("contrasena");
+    const botonEntrar = document.getElementById("boton-entrar");
+    const botonMostrar = document.getElementById("mostrar-clave");
+    const mensajeAcceso = document.getElementById("mensaje-acceso");
+
+    function mostrarMensaje(texto, tipo) {
+      mensajeAcceso.textContent = texto;
+      mensajeAcceso.className = `mensaje visible ${tipo}`;
+    }
+
+    function limpiarMensaje() {
+      mensajeAcceso.textContent = "";
+      mensajeAcceso.className = "mensaje";
+    }
+
+    botonMostrar.addEventListener("click", function () {
+      const estaOculta = campoContrasena.type === "password";
+      campoContrasena.type = estaOculta ? "text" : "password";
+      botonMostrar.textContent = estaOculta ? "Ocultar" : "Mostrar";
+      botonMostrar.setAttribute("aria-label", estaOculta ? "Ocultar contraseña" : "Mostrar contraseña");
+      campoContrasena.focus();
+    });
+
+    campoContrasena.addEventListener("input", limpiarMensaje);
+
+    formulario.addEventListener("submit", async function (evento) {
+      evento.preventDefault();
+      limpiarMensaje();
+
+      const contrasena = campoContrasena.value.trim();
+
+      if (!contrasena) {
+        mostrarMensaje("Introduce la contraseña para continuar.", "error");
+        campoContrasena.focus();
+        return;
+      }
+
+      botonEntrar.disabled = true;
+      botonEntrar.textContent = "Comprobando...";
+
+      try {
+        const enlace = await descifrarEnlace(contrasena, CONFIGURACION_CIFRADA);
+        mostrarMensaje("Acceso correcto. Abriendo la galeria...", "info");
+        window.location.href = enlace;
+      } catch (error) {
+        mostrarMensaje("La contraseña no es correcta. Compruebala e intentalo de nuevo.", "error");
+        campoContrasena.select();
+      } finally {
+        botonEntrar.disabled = false;
+        botonEntrar.textContent = "Entrar a la galeria";
+      }
+    });
+
+    async function descifrarEnlace(contrasena, configuracion) {
+      const sal = base64AArray(configuracion.sal);
+      const iv = base64AArray(configuracion.iv);
+      const cifrado = base64AArray(configuracion.cifrado);
+
+      const claveBase = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(contrasena),
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+      );
+
+      const claveDerivada = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: sal, iterations: 100000, hash: "SHA-256" },
+        claveBase,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["decrypt"]
+      );
+
+      const datosDescifrados = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv },
+        claveDerivada,
+        cifrado
+      );
+
+      return new TextDecoder().decode(datosDescifrados);
+    }
+
+    function base64AArray(base64) {
+      const binario = atob(base64);
+      const bytes = new Uint8Array(binario.length);
+      for (let i = 0; i < binario.length; i++) {
+        bytes[i] = binario.charCodeAt(i);
+      }
+      return bytes;
+    }
+  </script>
+</body>
+</html>
